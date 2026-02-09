@@ -50,6 +50,24 @@ class FieldsModel extends ListModel
     }
 
     /**
+     * Method to get a form object.
+     *
+     * @param   string   $name     The name of the form.
+     * @param   string   $source   The form source.
+     * @param   array    $options  Optional array of options for the form creation.
+     * @param   boolean  $clear    Optional argument to force load a new form.
+     * @param   mixed    $xpath    An optional xpath to load.
+     *
+     * @return  \Joomla\CMS\Form\Form|boolean  A Form object on success, false on failure
+     *
+     * @since   1.0.0
+     */
+    public function getFilterForm($data = array(), $loadData = true)
+    {
+        return $this->loadForm('com_advform.fields.filter', 'filter_fields', ['control' => '', 'load_data' => $loadData]);
+    }
+
+    /**
      * Method to auto-populate the model state.
      *
      * @param   string  $ordering   An optional ordering field.
@@ -62,6 +80,16 @@ class FieldsModel extends ListModel
      */
     protected function populateState($ordering = 'a.ordering', $direction = 'asc')
     {
+        // Load the filter state
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
+
+        $published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '');
+        $this->setState('filter.state', $published);
+
+        $type = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type');
+        $this->setState('filter.type', $type);
+
         // Load the parameters.
         $params = Factory::getApplication()->getParams();
         $this->setState('params', $params);
