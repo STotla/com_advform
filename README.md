@@ -2,6 +2,19 @@
 
 A comprehensive Joomla 5 component for creating and managing custom fields with a field manager interface similar to Joomla's core custom fields functionality.
 
+## Quick Start - Build Installable Package
+
+To create a Joomla-installable ZIP package:
+
+```bash
+chmod +x build.sh
+./build.sh
+```
+
+This generates `build/com_advform_1.0.0.zip` which you can directly install in Joomla via **System** → **Install** → **Extensions**.
+
+For detailed build instructions, see [BUILD.md](BUILD.md).
+
 ## Features
 
 - **Admin Field Manager** - Complete backend interface for managing custom fields
