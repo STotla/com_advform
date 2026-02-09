@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <field
+        name="value"
+        type="text"
+        label="COM_ADVFORM_FIELD_OPTION_VALUE_LABEL"
+        description="COM_ADVFORM_FIELD_OPTION_VALUE_DESC"
+        class="form-control"
+        required="true"
+    />
+
+    <field
+        name="text"
+        type="text"
+        label="COM_ADVFORM_FIELD_OPTION_TEXT_LABEL"
+        description="COM_ADVFORM_FIELD_OPTION_TEXT_DESC"
+        class="form-control"
+        required="true"
+    />
+</form>

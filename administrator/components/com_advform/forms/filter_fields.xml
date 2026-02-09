@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_ADVFORM_FILTER_SEARCH_DESC"
+            description="COM_ADVFORM_FILTER_SEARCH_DESC"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field
+            name="state"
+            type="status"
+            label="JOPTION_SELECT_PUBLISHED"
+            onchange="this.form.submit();"
+        >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+
+        <field
+            name="type"
+            type="list"
+            label="COM_ADVFORM_SELECT_TYPE"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ADVFORM_SELECT_TYPE</option>
+            <option value="text">COM_ADVFORM_FIELD_TYPE_TEXT</option>
+            <option value="textarea">COM_ADVFORM_FIELD_TYPE_TEXTAREA</option>
+            <option value="email">COM_ADVFORM_FIELD_TYPE_EMAIL</option>
+            <option value="url">COM_ADVFORM_FIELD_TYPE_URL</option>
+            <option value="telephone">COM_ADVFORM_FIELD_TYPE_TELEPHONE</option>
+            <option value="number">COM_ADVFORM_FIELD_TYPE_NUMBER</option>
+            <option value="calendar">COM_ADVFORM_FIELD_TYPE_CALENDAR</option>
+            <option value="list">COM_ADVFORM_FIELD_TYPE_LIST</option>
+            <option value="radio">COM_ADVFORM_FIELD_TYPE_RADIO</option>
+            <option value="checkbox">COM_ADVFORM_FIELD_TYPE_CHECKBOX</option>
+            <option value="checkboxes">COM_ADVFORM_FIELD_TYPE_CHECKBOXES</option>
+            <option value="editor">COM_ADVFORM_FIELD_TYPE_EDITOR</option>
+        </field>
+    </fields>
+
+    <fields name="list">
+        <field
+            name="fullordering"
+            type="list"
+            label="COM_ADVFORM_LIST_FULL_ORDERING"
+            onchange="this.form.submit();"
+        >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+            <option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+            <option value="a.state ASC">JSTATUS_ASC</option>
+            <option value="a.state DESC">JSTATUS_DESC</option>
+            <option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
+            <option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
+            <option value="a.type ASC">COM_ADVFORM_HEADING_TYPE_ASC</option>
+            <option value="a.type DESC">COM_ADVFORM_HEADING_TYPE_DESC</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            default="25"
+            label="JGLOBAL_LIST_LIMIT"
+            onchange="this.form.submit();"
+        />
+    </fields>
+</form>
