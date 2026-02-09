@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+    <name>COM_ADVFORM</name>
+    <author>Sam Web Technologies</author>
+    <creationDate>2026-02</creationDate>
+    <copyright>Copyright (C) 2026 Sam Web Technologies. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <authorEmail>admin@samwebtechnologies.com</authorEmail>
+    <authorUrl>https://samwebtechnologies.com</authorUrl>
+    <version>1.0.0</version>
+    <description>COM_ADVFORM_XML_DESCRIPTION</description>
+    <namespace path="administrator/components/com_advform/src">SamWebTechnologies\Component\Advform</namespace>
+    
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">administrator/components/com_advform/sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">administrator/components/com_advform/sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    
+    <files folder="components/com_advform">
+        <folder>src</folder>
+    </files>
+    
+    <administration>
+        <menu>COM_ADVFORM</menu>
+        <submenu>
+            <menu link="option=com_advform&amp;view=fields">COM_ADVFORM_MENU_FIELDS</menu>
+        </submenu>
+        
+        <files folder="administrator/components/com_advform">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>forms</folder>
+            <folder>language</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+        </files>
+    </administration>
+</extension>
