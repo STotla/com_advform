@@ -30,6 +30,7 @@
     <administration>
         <menu>COM_ADVFORM</menu>
         <submenu>
+            <menu link="option=com_advform&amp;view=forms">COM_ADVFORM_MENU_FORMS</menu>
             <menu link="option=com_advform&amp;view=fields">COM_ADVFORM_MENU_FIELDS</menu>
         </submenu>
         
