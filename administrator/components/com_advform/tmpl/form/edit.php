@@ -297,18 +297,23 @@ $formFieldsJson = json_encode($formFields);
             optionsHtml = '<div class="field-input-group"><label>Options:</label><div id="options_' + fieldId + '">';
             if (options.length > 0) {
                 options.forEach(function(opt, idx) {
-                    optionsHtml += '<div class="option-item"><input type="text" placeholder="Value" value="' + opt.value + '" data-option-value><input type="text" placeholder="Text" value="' + opt.text + '" data-option-text><button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">Remove</button></div>';
+                    const escapedValue = String(opt.value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+                    const escapedText = String(opt.text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+                    optionsHtml += '<div class="option-item"><input type="text" placeholder="Value" value="' + escapedValue + '" data-option-value><input type="text" placeholder="Text" value="' + escapedText + '" data-option-text><button type="button" class="btn btn-sm btn-danger remove-option-btn">Remove</button></div>';
                 });
             }
-            optionsHtml += '</div><button type="button" class="btn btn-sm btn-success mt-2" onclick="addOption(\'' + fieldId + '\')">Add Option</button></div>';
+            optionsHtml += '</div><button type="button" class="btn btn-sm btn-success mt-2 add-option-btn">Add Option</button></div>';
         }
+        
+        const defaultColor = '#000000';
+        const fieldColor = color || defaultColor;
         
         fieldDiv.innerHTML = `
             <div class="field-header">
                 <span class="field-label">${fieldLabel} (${fieldType})</span>
                 <div class="field-actions">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="toggleFieldDetails('${fieldId}')">Edit</button>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="removeField('${fieldId}')">Delete</button>
+                    <button type="button" class="btn btn-sm btn-primary toggle-details-btn">Edit</button>
+                    <button type="button" class="btn btn-sm btn-danger remove-field-btn">Delete</button>
                 </div>
             </div>
             <div class="field-details" id="details_${fieldId}">
@@ -334,7 +339,7 @@ $formFieldsJson = json_encode($formFields);
                 </div>
                 <div class="field-input-group">
                     <label>Color:</label>
-                    <input type="color" value="${color || '#000000'}" data-color>
+                    <input type="color" value="${fieldColor}" data-color>
                 </div>
                 <div class="field-input-group">
                     <label>
@@ -347,6 +352,77 @@ $formFieldsJson = json_encode($formFields);
         
         formCanvas.appendChild(fieldDiv);
         
+        // Add event listeners for buttons
+        const toggleBtn = fieldDiv.querySelector('.toggle-details-btn');
+        const removeBtn = fieldDiv.querySelector('.remove-field-btn');
+        
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function() {
+                const details = fieldDiv.querySelector('.field-details');
+                if (details) {
+                    details.classList.toggle('active');
+                }
+            });
+        }
+        
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to remove this field?')) {
+                    fieldDiv.remove();
+                    updateFormData();
+                    
+                    // Show empty message if no fields
+                    const remainingFields = document.querySelectorAll('.form-field-item');
+                    if (remainingFields.length === 0) {
+                        const emptyMessage = document.getElementById('emptyMessage');
+                        if (emptyMessage) {
+                            emptyMessage.style.display = 'block';
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Add event listeners for option buttons
+        const addOptionBtn = fieldDiv.querySelector('.add-option-btn');
+        if (addOptionBtn) {
+            addOptionBtn.addEventListener('click', function() {
+                const optionsDiv = fieldDiv.querySelector('[id^="options_"]');
+                if (optionsDiv) {
+                    const optionItem = document.createElement('div');
+                    optionItem.className = 'option-item';
+                    optionItem.innerHTML = '<input type="text" placeholder="Value" data-option-value><input type="text" placeholder="Text" data-option-text><button type="button" class="btn btn-sm btn-danger remove-option-btn">Remove</button>';
+                    optionsDiv.appendChild(optionItem);
+                    
+                    // Add event listeners for new option
+                    const inputs = optionItem.querySelectorAll('input');
+                    inputs.forEach(function(input) {
+                        input.addEventListener('change', updateFormData);
+                        input.addEventListener('input', updateFormData);
+                    });
+                    
+                    const removeOptBtn = optionItem.querySelector('.remove-option-btn');
+                    if (removeOptBtn) {
+                        removeOptBtn.addEventListener('click', function() {
+                            optionItem.remove();
+                            updateFormData();
+                        });
+                    }
+                    
+                    updateFormData();
+                }
+            });
+        }
+        
+        // Add event listeners for existing remove option buttons
+        const removeOptBtns = fieldDiv.querySelectorAll('.remove-option-btn');
+        removeOptBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                btn.closest('.option-item').remove();
+                updateFormData();
+            });
+        });
+        
         // Add event listeners for input changes
         const inputs = fieldDiv.querySelectorAll('input, select, textarea');
         inputs.forEach(function(input) {
@@ -356,50 +432,6 @@ $formFieldsJson = json_encode($formFields);
         
         updateFormData();
     }
-    
-    window.toggleFieldDetails = function(fieldId) {
-        const details = document.getElementById('details_' + fieldId);
-        details.classList.toggle('active');
-    };
-    
-    window.removeField = function(fieldId) {
-        const field = document.querySelector('[data-field-id="' + fieldId + '"]');
-        if (field && confirm('Are you sure you want to remove this field?')) {
-            field.remove();
-            updateFormData();
-            
-            // Show empty message if no fields
-            const remainingFields = document.querySelectorAll('.form-field-item');
-            if (remainingFields.length === 0) {
-                const emptyMessage = document.getElementById('emptyMessage');
-                if (emptyMessage) {
-                    emptyMessage.style.display = 'block';
-                }
-            }
-        }
-    };
-    
-    window.addOption = function(fieldId) {
-        const optionsDiv = document.getElementById('options_' + fieldId);
-        const optionItem = document.createElement('div');
-        optionItem.className = 'option-item';
-        optionItem.innerHTML = '<input type="text" placeholder="Value" data-option-value><input type="text" placeholder="Text" data-option-text><button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">Remove</button>';
-        optionsDiv.appendChild(optionItem);
-        
-        // Add event listeners
-        const inputs = optionItem.querySelectorAll('input');
-        inputs.forEach(function(input) {
-            input.addEventListener('change', updateFormData);
-            input.addEventListener('input', updateFormData);
-        });
-        
-        updateFormData();
-    };
-    
-    window.removeOption = function(button) {
-        button.closest('.option-item').remove();
-        updateFormData();
-    };
     
     function updateFormData() {
         const fields = [];

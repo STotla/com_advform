@@ -52,7 +52,7 @@ class FormTable extends Table
 
         // Check for valid title
         if (trim($this->title) == '') {
-            throw new \UnexpectedValueException(sprintf('The title is empty'));
+            throw new \UnexpectedValueException('The title is empty');
         }
 
         return true;
