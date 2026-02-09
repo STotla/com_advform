@@ -1,6 +1,6 @@
 # com_advform - Joomla 5 Advanced Form Component
 
-A comprehensive Joomla 5 component for creating and managing custom fields with a field manager interface similar to Joomla's core custom fields functionality.
+A comprehensive Joomla 5 component for creating and managing custom forms with a drag-and-drop form builder interface and field manager.
 
 ## Quick Start - Build Installable Package
 
@@ -17,6 +17,11 @@ For detailed build instructions, see [BUILD.md](BUILD.md).
 
 ## Features
 
+- **Form Builder** - Drag-and-drop interface for creating custom forms
+- **Form Management** - Complete backend interface for managing forms
+- **Field Customization** - Customize fields with labels, placeholders, CSS classes, colors, and more
+- **Multiple Field Types** - Support for text, textarea, email, select, radio, and checkbox fields
+- **Options Management** - Define options for select, radio, and checkbox fields
 - **Admin Field Manager** - Complete backend interface for managing custom fields
 - **Multiple Field Types** - Support for 12+ field types including text, textarea, email, URL, telephone, number, calendar, list, radio, checkbox, checkboxes, and editor
 - **Field Options Management** - Repeatable field options interface for list-based field types
@@ -117,6 +122,17 @@ com_advform/
 ```
 
 ## Usage
+
+### Managing Forms
+
+1. Navigate to **Components** → **Advanced Form** → **Forms**
+2. Click **New** to create a new form
+3. Fill in the form details:
+   - **General Tab**: Title, description, published status
+   - **Form Builder Tab**: Drag and drop fields, customize each field
+   - **Publishing Tab**: View creation and modification details
+
+For detailed form builder instructions, see [FORM-BUILDER.md](FORM-BUILDER.md).
 
 ### Managing Fields
 

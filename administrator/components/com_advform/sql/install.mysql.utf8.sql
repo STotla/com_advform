@@ -25,3 +25,38 @@ CREATE TABLE IF NOT EXISTS `#__advform_fields` (
   KEY `idx_state` (`state`),
   KEY `idx_ordering` (`ordering`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__advform_forms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  `state` tinyint(3) NOT NULL DEFAULT 1,
+  `params` text NOT NULL,
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(10) unsigned NOT NULL DEFAULT 0,
+  `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT 0,
+  `checked_out` int(10) unsigned NOT NULL DEFAULT 0,
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `idx_state` (`state`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__advform_form_fields` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `form_id` int(10) unsigned NOT NULL,
+  `field_type` varchar(50) NOT NULL DEFAULT 'text',
+  `field_label` varchar(255) NOT NULL DEFAULT '',
+  `field_name` varchar(255) NOT NULL DEFAULT '',
+  `placeholder` varchar(255) DEFAULT '',
+  `default_value` text,
+  `css_class` varchar(255) DEFAULT '',
+  `color` varchar(50) DEFAULT '',
+  `required` tinyint(1) NOT NULL DEFAULT 0,
+  `options` text,
+  `ordering` int(11) NOT NULL DEFAULT 0,
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_form_id` (`form_id`),
+  KEY `idx_ordering` (`ordering`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
