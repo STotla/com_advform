@@ -223,6 +223,7 @@ $formFieldsJson = json_encode($formFields);
     
     let fieldCounter = 0;
     let formFields = <?php echo $formFieldsJson; ?> || [];
+    const defaultFieldColor = '#000000';
     
     // Initialize existing fields
     document.addEventListener('DOMContentLoaded', function() {
@@ -305,8 +306,7 @@ $formFieldsJson = json_encode($formFields);
             optionsHtml += '</div><button type="button" class="btn btn-sm btn-success mt-2 add-option-btn">Add Option</button></div>';
         }
         
-        const defaultColor = '#000000';
-        const fieldColor = color || defaultColor;
+        const fieldColor = color || defaultFieldColor;
         
         fieldDiv.innerHTML = `
             <div class="field-header">
